@@ -23,3 +23,4 @@ do_deploy() {
 addtask deploy before do_build after do_install
 
 INSANE_SKIP_${PN} += "already-stripped"
+

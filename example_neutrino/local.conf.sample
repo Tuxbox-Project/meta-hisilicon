@@ -71,5 +71,5 @@ IMAGE_INSTALL_append += ""
 IPK_FEED_SERVER = "file:////media/sda1/service/ipk"
 IMAGE_LOCATION = "file:////media/sda1/service/image/flashimage.img"
 RELEASE_TEXT_LOCATION = "file:////media/sda1/service/image/beta.txt" 
-#RELEASE_TEXT_LOCATION_HOST = "/var/www/images/hd51/beta.txt"
+#RELEASE_TEXT_LOCATION_HOST = "/var/www/images/hd60/beta.txt"
 
