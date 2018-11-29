@@ -36,7 +36,7 @@ KERNEL_IMAGEDEST = "/tmp"
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
-FILES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}${KERNEL_IMAGETYPE}"
+FILES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}"
 
 kernel_do_install_append() {
 	install -d ${D}${KERNEL_IMAGEDEST}
@@ -45,8 +45,8 @@ kernel_do_install_append() {
 
 pkg_postinst_kernel-image() {
 	if [ "x$D" == "x" ]; then
-		if [ -f ${KERNEL_IMAGEDEST}${KERNEL_IMAGETYPE} ] ; then
-			dd if=${KERNEL_IMAGEDEST}${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
+		if [ -f ${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
+			dd if=${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
 		fi
 	fi
 	true
