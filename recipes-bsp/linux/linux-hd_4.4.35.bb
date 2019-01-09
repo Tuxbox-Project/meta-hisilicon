@@ -32,21 +32,20 @@ S = "${WORKDIR}/linux-${PV}"
 
 export OS = "Linux"
 KERNEL_OBJECT_SUFFIX = "ko"
-KERNEL_IMAGEDEST = "/tmp"
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
-FILES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}"
+FILES_${KERNEL_PACKAGE_NAME}-image = "/tmp"
 
 kernel_do_install_append() {
-	install -d ${D}${KERNEL_IMAGEDEST}
-	install -m 0755 ${KERNEL_OUTPUT} ${D}${KERNEL_IMAGEDEST}
+        install -d ${D}/tmp
+        install -m 0755 ${KERNEL_OUTPUT} ${D}/tmp
 }
 
 pkg_postinst_kernel-image() {
 	if [ "x$D" == "x" ]; then
-		if [ -f ${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
-			dd if=${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
+		if [ -f /tmp/${KERNEL_IMAGETYPE} ] ; then
+			dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
 		fi
 	fi
 	true
