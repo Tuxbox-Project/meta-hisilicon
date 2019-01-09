@@ -38,8 +38,8 @@ MACHINE ?= "hd60"
 # What image to build ?
 IMAGENAME = "neutrino-image"
 
-# Choose neutrino source. Possible values are "mp", "tango" or "ni"
-FLAVOUR = "mp"
+# Choose neutrino source. Possible values are "tuxbox", "tango" or "ni"
+FLAVOUR = "tuxbox"
 
 # set initial passwort for user root. Keep empty for root:
 ROOTPW = ""
@@ -72,4 +72,3 @@ IPK_FEED_SERVER = "file:////media/sda1/service/ipk"
 IMAGE_LOCATION = "file:////media/sda1/service/image/flashimage.img"
 RELEASE_TEXT_LOCATION = "file:////media/sda1/service/image/beta.txt" 
 #RELEASE_TEXT_LOCATION_HOST = "/var/www/images/hd60/beta.txt"
-
