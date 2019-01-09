@@ -42,11 +42,6 @@ kernel_do_install_append() {
         install -m 0755 ${KERNEL_OUTPUT} ${D}/tmp
 }
 
-pkg_postinst_kernel-image() {
-	if [ "x$D" == "x" ]; then
-		if [ -f /tmp/${KERNEL_IMAGETYPE} ] ; then
-			dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
-		fi
-	fi
-	true
+pkg_postinst_on_target_kernel-image() {
+	[ -f /tmp/${KERNEL_IMAGETYPE} ] && dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
 }
