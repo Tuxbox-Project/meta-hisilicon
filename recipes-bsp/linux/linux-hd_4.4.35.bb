@@ -6,18 +6,18 @@ VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 
 KERNEL_VERSION = "4.4.35"
 
-SRCDATE = "20180301"
+SRCDATE = "20181228"
 COMPATIBLE_MACHINE = "(hd60)"
 
 inherit kernel machine_kernel_pr
 
-SRC_URI[arm.md5sum] = "bb368255800be3d3d7cfa2710928fe9c"
-SRC_URI[arm.sha256sum] = "3dd7e7a99f70f0be8b725e4628f243c3aa1d42072a32e4a4b5268f69b535fc1d"
+SRC_URI[arm.md5sum] = "ede25f1c2c060f1059529a2896cee5a9"
+SRC_URI[arm.sha256sum] = "ea4ba0433d252c18f38ff2f4dce4b70880e447e1cffdc2066d5a9b5f8098ae7e"
 
 SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.tar.gz;name=${ARCH} \
 	file://defconfig \
-	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
-	file://0003-dont-mark-register-as-const.patch \
+	file://dont-mark-register-as-const.patch \
+	file://ieee80211-increase-scan-result-expire-time.patch \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
