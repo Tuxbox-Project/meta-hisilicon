@@ -34,4 +34,3 @@ pkg_prerm_${PN}() {
 		fi
 	fi
 }
-
