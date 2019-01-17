@@ -6,5 +6,6 @@ DEPENDS_append += " \
 IMAGE_INSTALL += " \
 	hd-dvb-modules-hd60 \
 	hd-libs-hd60 \
+	hd-mali-hd60 \
 	kernel-module-mali-hd60 \
 "
