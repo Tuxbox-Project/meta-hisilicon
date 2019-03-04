@@ -19,6 +19,7 @@ SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.ta
 	file://dont-mark-register-as-const.patch \
 	file://ieee80211-increase-scan-result-expire-time.patch \
 	file://give-up-on-gcc-ilog2-constant-optimizations.patch \
+	file://0001-remote.patch \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
