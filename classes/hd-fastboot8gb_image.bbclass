@@ -3,7 +3,7 @@ inherit image_types
 IMAGE_TYPEDEP_hdfastboot8gb = "ext4"
 
 BOOTOPTIONS_PARTITION_SIZE = "2048"
-IMAGE_ROOTFS_SIZE = "870400"
+IMAGE_ROOTFS_SIZE = "866304"
 
 do_image_hdfastboot8gb[depends] = " \
 	android-tools-native:do_populate_sysroot \
