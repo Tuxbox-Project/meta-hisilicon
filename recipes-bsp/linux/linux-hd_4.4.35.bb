@@ -20,6 +20,7 @@ SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.ta
 	file://ieee80211-increase-scan-result-expire-time.patch \
 	file://give-up-on-gcc-ilog2-constant-optimizations.patch \
 	file://0001-remote.patch \
+	file://initramfs-subdirboot.cpio.gz;unpack=0 \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
@@ -39,11 +40,16 @@ KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
 FILES_${KERNEL_PACKAGE_NAME}-image = "/tmp"
 
+kernel_do_configure_prepend() {
+    install -d ${B}/usr
+    install -m 0644 ${WORKDIR}/initramfs-subdirboot.cpio.gz ${B}/
+}
+
 kernel_do_install_append() {
         install -d ${D}/tmp
         install -m 0755 ${KERNEL_OUTPUT} ${D}/tmp
 }
 
 pkg_postinst_on_target_kernel-image() {
-	[ -f /tmp/${KERNEL_IMAGETYPE} ] && dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p20
+	[ -f /tmp/${KERNEL_IMAGETYPE} ] && dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p19
 }
