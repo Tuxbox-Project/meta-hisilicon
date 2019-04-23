@@ -1,0 +1,9 @@
+[Unit]
+Description=Swapon Swap File
+
+[Swap]
+What=/mnt/userdata/swapfile
+Options=nofail,auto
+
+[Install]
+WantedBy=multi-user.target

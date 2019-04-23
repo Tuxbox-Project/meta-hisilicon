@@ -21,6 +21,7 @@ SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.ta
 	file://give-up-on-gcc-ilog2-constant-optimizations.patch \
 	file://0001-remote.patch \
 	file://initramfs-subdirboot.cpio.gz;unpack=0 \
+	file://findkerneldevice.sh \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
@@ -38,7 +39,7 @@ KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
-FILES_${KERNEL_PACKAGE_NAME}-image = "/tmp"
+FILES_${KERNEL_PACKAGE_NAME}-image = "/tmp /boot"
 
 kernel_do_configure_prepend() {
     install -d ${B}/usr
@@ -48,8 +49,15 @@ kernel_do_configure_prepend() {
 kernel_do_install_append() {
         install -d ${D}/tmp
         install -m 0755 ${KERNEL_OUTPUT} ${D}/tmp
+        install -m 0755 ${WORKDIR}/findkerneldevice.sh ${D}/${KERNEL_IMAGEDEST}
 }
 
-pkg_postinst_on_target_kernel-image() {
-	[ -f /tmp/${KERNEL_IMAGETYPE} ] && dd if=/tmp/${KERNEL_IMAGETYPE} of=/dev/mmcblk0p19
+pkg_postinst_kernel-image_arm() {
+	if [ "x$D" == "x" ]; then
+		if [ -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ] ; then
+			/${KERNEL_IMAGEDEST}/findkerneldevice.sh
+			dd if=/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} of=/dev/kernel
+		fi
+	fi
+    true
 }

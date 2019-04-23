@@ -1,6 +1,7 @@
 DEPENDS_append += " \
         hd-partitions-hd60 \
         hd-bootargs-hd60 \
+	hd-recovery-hd60 \
 "
 
 IMAGE_INSTALL += " \
