@@ -69,22 +69,22 @@ function reboot()
 end
 
 function basename(str)
-        local name = string.gsub(str, "(.*/)(.*)", "%2")
-        return name
+	local name = string.gsub(str, "(.*/)(.*)", "%2")
+	return name
 end
 
 function get_imagename(root)
-        local glob = require "posix".glob
-        for _, j in pairs(glob('/boot/*', 0)) do
-                for line in io.lines(j) do
-                        if (j ~= bootfile) or (j ~= nil) then
-                                if line:match(devbase .. root) then
-                                        imagename = basename(j)
-                                end
-                        end
-                end
-        end
-        return imagename
+	local glob = require "posix".glob
+	for _, j in pairs(glob('/boot/*', 0)) do
+		for line in io.lines(j) do
+			if (j ~= bootfile) or (j ~= nil) then
+				if line:match(devbase .. root) then
+				imagename = basename(j)
+			end
+		end
+	end
+end
+return imagename
 end
 
 function exists(file)
@@ -110,7 +110,7 @@ if locale[lang] == nil then
 end
 timing_menu = neutrino_conf:getString("timing.menu", "0")
 
-chooser_dx = n:scale2Res(600)
+chooser_dx = n:scale2Res(700)
 chooser_dy = n:scale2Res(200)
 chooser_x = SCREEN.OFF_X + (((SCREEN.END_X - SCREEN.OFF_X) - chooser_dx) / 2)
 chooser_y = SCREEN.OFF_Y + (((SCREEN.END_Y - SCREEN.OFF_Y) - chooser_dy) / 2)
@@ -170,8 +170,8 @@ chooser:hide()
 if colorkey then
 	if isdir("/mnt/" .. devbase .. root) then
 		-- found image folder
-        elseif isdir("/mnt/userdata/" .. devbase .. root) then
-                -- found image folder
+	elseif isdir("/mnt/userdata/" .. devbase .. root) then
+		-- found image folder
 	else
 		local ret = hintbox.new { title = caption, icon = "settings", text = locale[lang].empty_partition };
 		ret:paint();
@@ -188,13 +188,23 @@ if colorkey then
 end
 
 if res == "yes" then
-	local startup_lines ={}
-	for line in io.lines("/boot/STARTUP_LINUX_" .. root) do
-		table.insert(startup_lines, line)
-	end
-	file = io.open(bootfile, 'w')
-	for i, v in ipairs(startup_lines) do
-		file:write(v, "\n")
+	local glob = require "posix".glob
+	local startup_lines = {}
+	for _, j in pairs(glob('/boot/*', 0)) do
+		for line in io.lines(j) do
+			if (j ~= bootfile) or (j ~= nil) then
+				if line:match(devbase .. root) then
+					for line in io.lines(j) do
+						table.insert(startup_lines, line)
+					end
+				end
+			end
+		end
+		file = io.open(bootfile, 'w')
+		for i, v in ipairs(startup_lines) do
+			file:write(v, "\n")
+		end
+		file:close()
 	end
 	reboot()
 end
