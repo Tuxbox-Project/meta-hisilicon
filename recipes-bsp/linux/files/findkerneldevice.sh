@@ -1,4 +1,11 @@
 #!/bin/sh
 
-kerneldevice=$(sed -e 's/^.*kernel=//' -e 's/ .*$//' < /proc/cmdline)
-ln -sf $kerneldevice /dev/kernel
+args=`cat /proc/cmdline`
+for line in ${args};
+do
+     key=${line%%=*}
+     value=${line#*=}
+     if [ "$key" == "kernel" ]; then
+          ln -sf "$value" /dev/kernel
+     fi
+done

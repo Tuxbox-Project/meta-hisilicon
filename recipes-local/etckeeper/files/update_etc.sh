@@ -3,7 +3,7 @@
 rootsubdir=$(sed -e 's/^.*rootsubdir=//' -e 's/ .*$//' < /proc/cmdline)
 
 dev="usb"
-mountpoint -q /media/hdd && dev="hdd"
+mountpoint -q /media/sdcard && dev="sdcard"
 
 if [ $rootsubdir = "linuxrootfs1" ]; then
         GIT__URL="/media/$dev/service/partition_1/git/etc.git"

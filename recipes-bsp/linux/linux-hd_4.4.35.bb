@@ -27,19 +27,20 @@ SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.ta
 # By default, kernel.bbclass modifies package names to allow multiple kernels
 # to be installed in parallel. We revert this change and rprovide the versioned
 # package names instead, to allow only one kernel to be installed.
-PKG_${KERNEL_PACKAGE_NAME}-base = "kernel-base"
-PKG_${KERNEL_PACKAGE_NAME}-image = "kernel-image"
-RPROVIDES_PKG_${KERNEL_PACKAGE_NAME}-base = "kernel-${KERNEL_VERSION}"
-RPROVIDES_PKG_${KERNEL_PACKAGE_NAME}-image = "kernel-image-${KERNEL_VERSION}"
+PKG_kernel-base = "kernel-base"
+PKG_kernel-image = "kernel-image"
+RPROVIDES_PKG_kernel-base = "kernel-${KERNEL_VERSION}"
+RPROVIDES_PKG_kernel-image = "kernel-image-${KERNEL_VERSION}"
 
 S = "${WORKDIR}/linux-${PV}"
 
 export OS = "Linux"
 KERNEL_OBJECT_SUFFIX = "ko"
+KERNEL_IMAGEDEST = "tmp"
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 
-FILES_${KERNEL_PACKAGE_NAME}-image = "/tmp /boot"
+FILES_kernel-image = "/${KERNEL_IMAGEDEST}/findkerneldevice.sh"
 
 kernel_do_configure_prepend() {
     install -d ${B}/usr
@@ -47,9 +48,8 @@ kernel_do_configure_prepend() {
 }
 
 kernel_do_install_append() {
-        install -d ${D}/tmp
-        install -m 0755 ${KERNEL_OUTPUT} ${D}/tmp
-        install -m 0755 ${WORKDIR}/findkerneldevice.sh ${D}/${KERNEL_IMAGEDEST}
+        install -d ${D}/${KERNEL_IMAGEDEST}
+	install -m 0755 ${WORKDIR}/findkerneldevice.sh ${D}/${KERNEL_IMAGEDEST}
 }
 
 pkg_postinst_kernel-image_arm() {

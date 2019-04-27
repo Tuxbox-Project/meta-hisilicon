@@ -1,0 +1,10 @@
+[Unit]
+Description=Create Partition Links
+Requires=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/partitions-by-name.sh
+
+[Install]
+WantedBy=multi-user.target

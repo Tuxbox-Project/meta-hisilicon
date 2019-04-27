@@ -55,7 +55,7 @@ image_packaging() {
 	cd ..; \
 	rm -Rf ${IMAGEDIRRECOVERY}; \
 	cd ${IMGDEPLOYDIR}/${IMAGEDIR}; \
-	zip -r ../${DISTRO_NAME}-${DISTRO_VERSION}-${MACHINE}_emmc.zip unforce_${MACHINE}.txt force_${MACHINE}_READ.ME ${MACHINE}/imageversion ${MACHINE}/uImage ${MACHINE}/rootfs.tar.bz2; \
+	zip -r ../${DISTRO_NAME}-${DISTRO_VERSION}-${MACHINE}_mmc.zip unforce_${MACHINE}.txt force_${MACHINE}_READ.ME ${MACHINE}/imageversion ${MACHINE}/uImage ${MACHINE}/rootfs.tar.bz2; \
 	cd ..; \
 	rm -Rf ${IMAGEDIR}; \
 }
