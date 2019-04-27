@@ -1,6 +1,5 @@
 inherit image_types
 
-IMAGE_ROOTFS = "${WORKDIR}/rootfs/linuxrootfs1"
 IMAGE_TYPEDEP_hdfastboot8gb = "ext4 tar.bz2"
 BOOTOPTIONS_PARTITION_SIZE = "2048"
 
