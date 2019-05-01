@@ -7,7 +7,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit deploy
 
-SRC_URI = "http://downloads.mutant-digital.net/${MACHINE}/${MACHINE}-partitions-${SRCDATE}.zip"
+SRC_URI = "http://downloads.mutant-digital.net/${MACHINE}/${MACHINE}-partitions-${SRCDATE}.zip \
+	   file://logo.img \
+"
 
 S = "${WORKDIR}"
 
@@ -20,7 +22,7 @@ do_deploy() {
     install -m 0755 ${WORKDIR}/${MACHINE}/fastboot.bin ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}
     install -m 0755 ${WORKDIR}/${MACHINE}/pq_param.bin ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}
     install -m 0755 ${WORKDIR}/${MACHINE}/baseparam.img ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}
-    install -m 0755 ${WORKDIR}/${MACHINE}/logo.img ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}
+    install -m 0755 ${WORKDIR}/logo.img ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}
 }
 
 addtask deploy before do_build after do_install
