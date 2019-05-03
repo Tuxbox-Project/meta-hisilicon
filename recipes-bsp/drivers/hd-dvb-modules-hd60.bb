@@ -17,7 +17,7 @@ do_compile_append () {
 	cat > suspend << EOF
 #!/bin/sh
 
-if [ $1 = "poweroff ]"; then
+if [ $1 = "poweroff" ]; then
         mount -t sysfs sys /sys
         /usr/bin/turnoff_power
 fi
