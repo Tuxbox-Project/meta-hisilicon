@@ -1,10 +1,11 @@
 #!/bin/sh
 
 machine="hd60"
+image="OpenEmbedded-warrior-hd60_mmc.zip"
 hdd_mount="/media/usb"
-mountpoint -q /media/hdd && hdd_mount="/media/hdd"
+mountpoint -q /media/sdcard && hdd_mount="/media/sdcard"
 servicedir="$hdd_mount/service"
-kernelname="kernel.bin"
+kernelname="uImage"
 kernelbase="linuxkernel"
 rootbase="linuxrootfs"
 picture_source="/usr/share/tuxbox/neutrino/icons"
@@ -24,7 +25,7 @@ fi
 
 exit_done() {
 	sleep 1
-	clear
+#	clear
 	systemctl start neutrino
 	exit 0;
 }
@@ -36,7 +37,7 @@ if [[ "$part_to_use" =~ ^[0-9]+$ ]]; then
 	if [ "$part_to_use" -lt 1 ] || [ $1 -gt 4 ]; then
 		{ printf '\n\033[31m%s\n' "Choose a valid partition [1-4]"; exit_done; }
 	elif [ "$part_to_use" = 1 ]; then
-		part=1; append=""
+		part=1; append=$part
 	elif [ "$part_to_use" = 2 ]; then
 		part=2; append=$part
 	elif [ "$part_to_use" = 3 ]; then
@@ -61,22 +62,26 @@ fi
 
 printf '\n\n\n\033[1m%s\n\033[0m' "Creating backup of partition $part" && echo "Creating backup of partition $part" > "$dev_display"
 [ ! -z "$2" ] && destination="$2/backup/partition_$part/$machine"
-[ -z "$2"  ] && ! [[ "$1" =~ ^[0-9]+$ ]] && destination="$1/backup/partition_$part/$machine"
-[ -z "$2"  ] && [[ "$1" =~ ^[0-9]+$ ]] && destination="$servicedir/image/backup/partition_$part/$machine"
-[ -z "$2"  ] && [ -z "$1" ] && destination="$servicedir/image/backup/partition_$part/$machine"
+[ -z "$2"  ] && ! [[ "$1" =~ ^[0-9]+$ ]] && destination="$1/backup/partition_$part"
+[ -z "$2"  ] && [[ "$1" =~ ^[0-9]+$ ]] && destination="$servicedir/image/backup/partition_$part"
+[ -z "$2"  ] && [ -z "$1" ] && destination="$servicedir/image/backup/partition_$part"
 
 [ -d "$destination" ] && rm -rf "$destination"
 mkdir -p "$destination"
 
-printf '\n\033[33m%s\033[37m%s\n' "Creating kernel backup in $destination/$kernelname"  && echo "Creating kernel backup" > "$dev_display"
-pv -w 100 < "$devbase/$kernelbase$append" > "$destination/$kernelname"
+printf '\n\033[33m%s\033[37m%s\n' "Creating $kernelname backup"  && echo "Creating $kernelname backup" > "$dev_display"
+[ -d $servicedir/image/backup/partition_$part/tmp/$machine ] || mkdir -p $servicedir/image/backup/partition_$part/tmp/$machine
+pv -w 100 < "$devbase/$kernelbase$append" > "$servicedir/image/backup/partition_$part/tmp/$machine/$kernelname"
 
-printf '\n\033[33m%s\033[37m%s\n' "Creating rootfs backup in $destination/$rootfsname" && echo "Creating rootfs backup" > "$dev_display"
-SIZE=`du -sk $rootsource/$rootbase$part | cut -f 1`
-cd $rootsource/$rootbase$part && tar cf - --exclude="./var/lib/samba/private/msg.sock" . | pv -w 100 -s $SIZE"k" | bzip2 -c > $destination/$rootfsname
+printf '\n\033[33m%s\033[37m%s\n' "Creating $rootfsname backup" && echo "Creating $rootfsname backup" > "$dev_display"
+SIZE=`du -sk $rootsource/$rootbase$part | awk '{print $1}'`
+cd $rootsource/$rootbase$part && tar cf - --exclude="./var/lib/samba/private/msg.sock" . | pv -w 100 -s $SIZE"k" | bzip2 -c > $servicedir/image/backup/partition_$part/tmp/$machine/$rootfsname
 
-[ -f "$servicedir/image/imageversion_partition_$part" ] && cp -f "$servicedir/image/imageversion_partition_$part" "$destination/imageversion"
+[ -f "$servicedir/image/imageversion_partition_$part" ] && cp -f "$servicedir/image/imageversion_partition_$part" "$servicedir/image/backup/partition_$part/tmp/imageversion"
 
+printf '\n\033[33m%s\033[37m%s\n' "Compressing $image"  && echo "Compressing $image" > "$dev_display"
+cd $servicedir/image/backup/partition_$part/tmp && zip -qr - $machine | pv -w 100 -bep -s $(du -bs $machine | awk '{print $1}') > $destination/$image
+[ -d $servicedir/image/backup/partition_$part/tmp ] && rm -rf $servicedir/image/backup/partition_$part/tmp
 printf '\n\033[1m\033[32m%s\033[0m\n' "Backup successfully completed"  && echo "Backup successfully completed" > "$dev_display"
 
 exit_done;
