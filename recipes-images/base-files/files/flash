@@ -92,27 +92,31 @@ if [[ ! $1 = "force" ]] && [[ ! $2 = "force" ]]; then
 			case $i in
 				restore)
 					imagedir="$imagebase/backup/partition_$part/$machine"
+					imagebase="$imagebase/backup/partition_$part"
 					restore_image="1"
 					imagefile="$imagebase/backup/partition_$part/$image"
 					;;
 				1|2|3|4)
-					imagedir="$2"
+					imagedir="$2/machine"
 					;;
 				/*)
 					imagedir="$2/$machine"
 					imagefile="$2/$image"
+					imagebase="$2"
 					;;
 				"")
 					imagedir="$1/$machine"
+					imagefile="$1/$image"
+					imagebase="$1"
 					;;
 			esac
 		done
 		imageversion="$imagedir/imageversion"
 		[[ -f $imageversion ]] && [[ -d $imagebase ]] && cp -rf $imageversion $imageversion_local
 		[ -d $imagedir ] || mkdir -p $imagedir
-                unzip -xo $imagefile -d $imagedir || exit_done;
-		[ ! -f $imagedir/$machine/$rootfs ] && printf '\n%s\n' "$imagedir/$rootfs not found" && exit_done
-		[ ! -f $imagedir/$machine/$kernel_bin ] && printf '\n%s\n' "$imagedir/$kernel_bin not found" && exit_done
+                cd $imagebase && unzip -xo $image || exit_done;
+		[ ! -f $imagedir/$rootfs ] && printf '\n%s\n' "$imagedir/$rootfs not found" && exit_done
+		[ ! -f $imagedir/$kernel_bin ] && printf '\n%s\n' "$imagedir/$kernel_bin not found" && exit_done
 		space_available="$(df -Pk $imagedir | awk 'NR==2 {print $4}')"
 		[ $space_available -lt 1048576 ] && printf '\n\033[31m%s\n' "You need at least 1G of free space on your device" && exit_done
 		write_image
