@@ -22,7 +22,18 @@ BB_DISKMON_DIRS = "\
     ABORT,${DL_DIR},100M,1K \
     ABORT,${SSTATE_DIR},100M,1K" 
 
-
+# Hash Equivalence
+#
+# Enable support for automatically running a local hash equivalence server and
+# instruct bitbake to use a hash equivalence aware signature generator. Hash
+# equivalence improves reuse of sstate by detecting when a given sstate
+# artifact can be reused as equivalent, even if the current task hash doesn't
+# match the one that generated the artifact.
+#
+# A shared hash equivalent server can be set with "<HOSTNAME>:<PORT>" format+#
+#
+BB_HASHSERVE = "auto"
+BB_SIGNATURE_HANDLER = "OEEquivHash"
 
 ### Qemu configuration
 PACKAGECONFIG_pn-qemu-native = "sdl"

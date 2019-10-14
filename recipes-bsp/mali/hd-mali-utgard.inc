@@ -3,7 +3,7 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-DEPENDS = "libdrm mesa patchelf-native"
+DEPENDS = "libdrm patchelf-native"
 VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 
 PROVIDES = "virtual/libgles2 virtual/libgles1 virtual/egl virtual/libgbm"
