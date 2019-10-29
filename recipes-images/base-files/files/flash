@@ -2,7 +2,7 @@
 
 machine="hd60"
 url="https://tuxbox-images.de/images/$machine"
-image="OpenEmbedded-warrior-hd60_mmc.zip"
+image="OpenEmbedded-zeus-hd60_mmc.zip"
 imagesource="$url/$image"
 hdd_mount="/media/usb"
 mountpoint -q /media/sdcard && hdd_mount="/media/sdcard"
