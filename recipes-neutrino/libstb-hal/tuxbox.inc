@@ -1,4 +1,5 @@
 EXTRA_OECONF_append += " \
-        --with-boxtype=hd60 \
+        --with-boxtype=armbox \
+	--with-boxmodel=hd60 \
 "
 

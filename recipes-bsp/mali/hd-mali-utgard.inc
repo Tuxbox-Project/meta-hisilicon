@@ -3,11 +3,11 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-DEPENDS = "libdrm patchelf-native"
+DEPENDS = "libdrm patchelf-native mesa"
 VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 
 PROVIDES = "virtual/libgles2 virtual/libgles1 virtual/egl virtual/libgbm"
-RPROVIDES_${PN} = "libmali.so libMali.so libEGL.so.1.4 libEGL.so.1 libEGL.so libGLESv1_CM.so.1.1 libGLESv1_CM.so.1 libGLESv1_CM.so libGLESv2.so.2.0 libGLESv2.so.2 libGLESv2.so libgbm.so"
+RPROVIDES_${PN} = "virtual/libgles2 virtual/egl libmali.so libMali.so libEGL.so.1.4 libEGL.so.1 libEGL.so libGLESv1_CM.so.1.1 libGLESv1_CM.so.1 libGLESv1_CM.so libGLESv2.so.2.0 libGLESv2.so.2 libGLESv2.so libgbm.so"
 
 SRC_URI = "http://downloads.mutant-digital.net/${MACHINE}/${MACHINE}-mali${VER}-${SRCDATE}.zip"
 
