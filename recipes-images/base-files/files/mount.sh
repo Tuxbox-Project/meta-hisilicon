@@ -18,9 +18,9 @@ MOUNT_POINT=$(/bin/mount | /bin/grep ${DEVICE} | /usr/bin/awk '{ print $3 }')
 
 do_mount()
 {
-    if [[ -n ${MOUNT_POINT} -o ${MOUNT_POINT} = " " ]]; then
-        echo "Warning: ${DEVICE} is already mounted at ${MOUNT_POINT}"
-        exit 1
+	if [[ -n ${MOUNT_POINT} ]] || [[ ${MOUNT_POINT} = " " ]]; then
+	        echo "Warning: ${DEVICE} is already mounted at ${MOUNT_POINT}"
+        	exit 1
 	fi
 
 	if udevadm info --query=property --name=${DEVICE} | grep "ID_FS_LABEL="; then
