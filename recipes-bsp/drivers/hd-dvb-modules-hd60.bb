@@ -1,5 +1,5 @@
 KV = "4.4.35"
-SRCDATE = "20200622"
+SRCDATE = "20200731"
 
 PROVIDES = "virtual/blindscan-dvbs"
 PROVIDES  = "virtual/dvb-driver"
@@ -8,8 +8,7 @@ RDEPENDS_${PN} = "libjpeg-turbo pulseaudio-lib-rtp"
 	
 require hd-dvb-modules.inc
 
-SRC_URI[md5sum] = "71727df0e1354442c069d86c4cbb2c83"
-SRC_URI[sha256sum] = "5c8278a7676f49a4777cf25117f0c66ca349ae6661dbf5daf62c9ff0a319b385"
+SRC_URI[sha256sum] = "afb24a25aeff996994490cf7b7be343dc8ae98205d12b199dba291f2fbd85126"
 
 do_configure[noexec] = "1"
 

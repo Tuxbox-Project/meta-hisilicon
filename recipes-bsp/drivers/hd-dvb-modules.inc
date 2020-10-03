@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 
 PV = "${KV}+${SRCDATE}"
 
-SRC_URI = "http://downloads.mutant-digital.net/${MACHINE}/${MACHINE}-drivers-${KV}-${SRCDATE}.zip"
+SRC_URI = "http://source.mynonpublic.com/gfutures/${MACHINE_DRIVER}-drivers-${KV}-${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 
