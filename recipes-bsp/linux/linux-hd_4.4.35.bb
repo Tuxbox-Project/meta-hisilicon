@@ -16,13 +16,25 @@ SRC_URI[arm.sha256sum] = "ea4ba0433d252c18f38ff2f4dce4b70880e447e1cffdc2066d5a9b
 
 SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.tar.gz;name=${ARCH} \
 	file://defconfig \
-	file://0001-scripts-dtc-Remove-redundant-YYLOC-global-declaration.patch \
-	file://dont-mark-register-as-const.patch \
-	file://ieee80211-increase-scan-result-expire-time.patch \
-	file://give-up-on-gcc-ilog2-constant-optimizations.patch \
+	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
+	file://0003-dont-mark-register-as-const.patch \
 	file://0001-remote.patch \
 	file://initramfs-subdirboot.cpio.gz;unpack=0 \
+	file://HauppaugeWinTV-dualHD.patch \
+	file://dib7000-linux_4.4.179.patch \
+	file://dvb-usb-linux_4.4.179.patch \
+	file://wifi-linux_4.4.183.patch \
 	file://findkerneldevice.sh \
+	file://move-default-dialect-to-SMB3.patch \
+	file://0004-linux-fix-buffer-size-warning-error.patch \
+	file://modules_mark__inittest__exittest_as__maybe_unused.patch \
+	file://includelinuxmodule_h_copy__init__exit_attrs_to_initcleanup_module.patch \
+	file://Backport_minimal_compiler_attributes_h_to_support_GCC_9.patch \
+	file://0005-xbox-one-tuner-4.4.patch \
+	file://0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
+	file://0007-dvb-mn88472-staging.patch \
+	file://mn88472_reset_stream_ID_reg_if_no_PLP_given.patch \
+	file://0001-scripts-dtc-Remove-redundant-YYLOC-global-declaration.patch \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
@@ -36,6 +48,7 @@ RPROVIDES_PKG_${KERNEL_PACKAGE_NAME}-image = "kernel-image-${KERNEL_VERSION}"
 S = "${WORKDIR}/linux-${PV}"
 
 export OS = "Linux"
+KBUILD_CFLAGS += "-O2 -mlong-calls "
 KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "tmp"
 KERNEL_IMAGETYPE = "uImage"
