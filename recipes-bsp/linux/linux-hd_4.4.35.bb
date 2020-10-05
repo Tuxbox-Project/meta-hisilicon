@@ -6,15 +6,14 @@ VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 
 KERNEL_VERSION = "4.4.35"
 
-SRCDATE = "20181228"
+SRCDATE = "20200219"
 COMPATIBLE_MACHINE = "(hd60)"
 
 inherit kernel machine_kernel_pr
 
-SRC_URI[arm.md5sum] = "ede25f1c2c060f1059529a2896cee5a9"
-SRC_URI[arm.sha256sum] = "ea4ba0433d252c18f38ff2f4dce4b70880e447e1cffdc2066d5a9b5f8098ae7e"
+SRC_URI[sha256sum] = "45ae717b966a74326fd7297d81b3a17fd5b3962b7704170682a615ca7cdec644"
 
-SRC_URI = "http://downloads.mutant-digital.net/linux-${PV}-${SRCDATE}-${ARCH}.tar.gz;name=${ARCH} \
+SRC_URI = "http://source.mynonpublic.com/gfutures/linux-${PV}-${SRCDATE}-${ARCH}.tar.gz \
 	file://defconfig \
 	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
 	file://0003-dont-mark-register-as-const.patch \
@@ -48,7 +47,6 @@ RPROVIDES_PKG_${KERNEL_PACKAGE_NAME}-image = "kernel-image-${KERNEL_VERSION}"
 S = "${WORKDIR}/linux-${PV}"
 
 export OS = "Linux"
-KBUILD_CFLAGS += "-O2 -mlong-calls "
 KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "tmp"
 KERNEL_IMAGETYPE = "uImage"
