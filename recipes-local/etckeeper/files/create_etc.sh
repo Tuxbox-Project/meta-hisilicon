@@ -2,8 +2,13 @@
 
 rootsubdir=$(sed -e 's/^.*rootsubdir=//' -e 's/ .*$//' < /proc/cmdline)
 
-dev="usb"
-mountpoint -q /media/sdcard && dev="sdcard"
+if mountpoint -q /media/sdcard; then
+	dev="sdcard"
+elif mountpoint -q /media/hdd; then
+	dev="hdd"
+elif mountpoint -q /media/usb; then
+	dev="usb"
+fi
 
 if [ $rootsubdir = "linuxrootfs1" ]; then
         GIT__URL="/media/$dev/service/partition_1/git/etc.git"
@@ -16,7 +21,7 @@ elif [ $rootsubdir = "linuxrootfs4" ]; then
 fi
 
 GIT_EXIST=$(echo $GIT__URL"/HEAD")
-DEST=$(echo $GIT__URL | cut -d"/" -f1,2,3)
+DEST="/media/$dev"
 
 if [ -e $GIT_EXIST ];then
         exit

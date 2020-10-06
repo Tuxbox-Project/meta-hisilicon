@@ -2,8 +2,14 @@
 
 rootsubdir=$(sed -e 's/^.*rootsubdir=//' -e 's/ .*$//' < /proc/cmdline)
 
-dev="usb"
-mountpoint -q /media/sdcard && dev="sdcard"
+if mountpoint -q /media/sdcard; then
+	dev="sdcard"
+elif mountpoint -q /media/hdd; then
+	dev="hdd"
+elif mountpoint -q /media/usb; then
+	dev="usb"
+fi
+
 
 if [ $rootsubdir = "linuxrootfs1" ]; then
         GIT__URL="/media/$dev/service/partition_1/git/etc.git"
@@ -38,6 +44,7 @@ if [ -e $GIT_EXIST ];then
                 etckeeper init
                 echo "rebooting"
                 systemctl reboot
+                
         fi
 else
         echo "no remote found"
