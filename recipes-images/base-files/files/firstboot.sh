@@ -24,6 +24,9 @@ if [ ! -f /mnt/userdata/swapfile ]; then
 	grep -q /mnt/userdata/swapfile /etc/fstab || echo "/mnt/userdata/swapfile none swap defaults 0 0" >> /etc/fstab
 fi
 
+grep -q /mnt/userdata/swapfile /proc/swaps || swapon /mnt/userdata/swapfile
+grep -q /mnt/userdata/swapfile /etc/fstab || echo "/mnt/userdata/swapfile none swap defaults 0 0" >> /etc/fstab
+
 echo "first boot script work done"
 #job done, remove it from systemd services
 systemctl disable firstboot.service
