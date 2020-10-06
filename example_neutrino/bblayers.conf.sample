@@ -8,7 +8,7 @@ BBFILES ?= ""
 BBLAYERS ?= " \
   ##COREBASE##/meta \
   ##COREBASE##/meta-yocto-bsp \
-  ##COREBASE##/meta-hd60 \
+  ##COREBASE##/meta-hisilicon \
   ##COREBASE##/meta-neutrino \
   "
 

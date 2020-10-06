@@ -3,15 +3,6 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 PREFERRED_VERSION_linux-hd = "4.4.35"
 
-#Provider
-PREFERRED_PROVIDER_virtual/kernel ?= "linux-hd"
-PREFERRED_PROVIDER_virtual/egl ?= "hd-mali-${MACHINE}"
-PREFERRED_PROVIDER_virtual/libgles1 ?= "hd-mali-${MACHINE}"
-PREFERRED_PROVIDER_virtual/libgles2 ?= "hd-mali-${MACHINE}"
-PREFERRED_PROVIDER_virtual/libopencl ?= "hd-mali-${MACHINE}"
-PREFERRED_PROVIDER_virtual/blindscan-dvbs ?= "hd-dvb-modules-${MACHINE}"
-PREFERRED_PROVIDER_virtual/blindscan-dvbc ?= "hd-dvb-modules-${MACHINE}"
-
 #require conf/machine/include/arm/arch-armv8.inc
 require conf/machine/include/tune-cortexa15.inc
 require conf/machine/include/hd-essential.inc

@@ -7,14 +7,14 @@ VER ?= "${@bb.utils.contains('TARGET_ARCH', 'aarch64', '64' , '', d)}"
 KERNEL_VERSION = "4.4.35"
 
 SRCDATE = "20200219"
-COMPATIBLE_MACHINE = "(hd60)"
+COMPATIBLE_MACHINE = "(hd60|hd61)"
 
 inherit kernel machine_kernel_pr
 
 SRC_URI[sha256sum] = "45ae717b966a74326fd7297d81b3a17fd5b3962b7704170682a615ca7cdec644"
 
 SRC_URI = "http://source.mynonpublic.com/gfutures/linux-${PV}-${SRCDATE}-${ARCH}.tar.gz \
-	file://defconfig \
+	file://${MACHINE}/defconfig \
 	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
 	file://0003-dont-mark-register-as-const.patch \
 	file://0001-remote.patch \
@@ -51,12 +51,14 @@ KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "tmp"
 KERNEL_IMAGETYPE = "uImage"
 KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
+KERNEL_EXTRA_ARGS = "EXTRA_CFLAGS=-Wno-attribute-alias"
 
 FILES_${KERNEL_PACKAGE_NAME}-image = "/${KERNEL_IMAGEDEST}/findkerneldevice.sh"
 
 kernel_do_configure_prepend() {
     install -d ${B}/usr
     install -m 0644 ${WORKDIR}/initramfs-subdirboot.cpio.gz ${B}/
+    cp -f ${WORKDIR}/${MACHINE}/defconfig ${B}/.config
 }
 
 kernel_do_install_append() {

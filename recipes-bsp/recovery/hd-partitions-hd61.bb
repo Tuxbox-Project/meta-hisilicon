@@ -1,0 +1,8 @@
+SRCDATE = "20200319"
+
+require hd-partitions.inc
+
+SRC_URI[md5sum] = "8593d75c3de95c51fb8889bd7744c272"
+SRC_URI[sha256sum] = "2a09ef0f22f44ec5ff4b5b6b284274c94e8906d136316e10bf95c965c7c87b45"
+
+COMPATIBLE_MACHINE = "hd61"

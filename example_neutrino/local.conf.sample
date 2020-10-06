@@ -38,7 +38,7 @@ BB_SIGNATURE_HANDLER = "OEEquivHash"
 BB_DANGLINGAPPENDS_WARNONLY = "1"
 
 ### Qemu configuration
-PACKAGECONFIG_pn-qemu-native = "sdl"
+PACKAGECONFIG_pn-qemu-native = ""
 ASSUME_PROVIDED += "libsdl-native"
 CONF_VERSION = "1"
 

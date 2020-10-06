@@ -1,21 +1,30 @@
-DESCRIPTION = "Hardware drivers for ${MACHINE}"
+SUMMARY = "Hardware drivers for ${MACHINE_DRIVER}"
 SECTION = "base"
 PRIORITY = "required"
 LICENSE = "CLOSED"
 
+KV = "4.4.35"
 PV = "${KV}+${SRCDATE}"
+
+PROVIDES = "virtual/blindscan-dvbs"
+PROVIDES  = "virtual/dvb-driver"
+RPROVIDES_${PN} = "virtual/dvb-driver"
+RDEPENDS_${PN} = "libjpeg-turbo pulseaudio-lib-rtp"
 
 SRC_URI = "http://source.mynonpublic.com/gfutures/${MACHINE}-drivers-${KV}-${SRCDATE}.zip"
 
 S = "${WORKDIR}"
 
-INHIBIT_PACKAGE_STRIP = "1"
+do_configure() {
+	cat > suspend << EOF
+#!/bin/sh
 
-inherit module
+if [ \$1 = "poweroff" ]; then
+        mount -t sysfs sys /sys
+        /usr/bin/turnoff_power
+fi
 
-FILES_${PN} += "${sysconfdir}/modules-load.d/${MACHINE}.conf"
-
-do_compile() {
+EOF
 }
 
 do_install() {
@@ -27,6 +36,15 @@ do_install() {
 	done
 }
 
+do_install_append() {
+	install -d ${D}${bindir} -d ${D}${systemd_unitdir}/system-shutdown
+	install -m 0755 ${S}/suspend ${D}${systemd_unitdir}/system-shutdown
+	install -m 0755 ${S}/turnoff_power ${D}${bindir}
+}
+
+do_package_qa() {
+}
+
 pkg_prerm_${PN}() {
 	if [ "x$D" == "x" ]; then
 		if [ -f /lib/modules/${KV}/extra/hi_play.ko ] ; then
@@ -34,3 +52,11 @@ pkg_prerm_${PN}() {
 		fi
 	fi
 }
+
+FILES_${PN} += "${sysconfdir} \
+		${bindir} \
+		${base_libdir} \
+"
+
+INSANE_SKIP_${PN} += "already-stripped"
+
