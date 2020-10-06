@@ -21,7 +21,6 @@ if [ ! -f /mnt/userdata/swapfile ]; then
 	chmod 600 /mnt/userdata/swapfile
 	mkswap -L swapspace /mnt/userdata/swapfile
 	swapon /mnt/userdata/swapfile
-	grep -q /mnt/userdata/swapfile /etc/fstab || echo "/mnt/userdata/swapfile none swap defaults 0 0" >> /etc/fstab
 fi
 
 grep -q /mnt/userdata/swapfile /proc/swaps || swapon /mnt/userdata/swapfile
