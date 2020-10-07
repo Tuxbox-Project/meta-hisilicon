@@ -44,17 +44,17 @@ image_packaging() {
 	if [ -e ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}/recovery.bin ]; then \
 		cp ${DEPLOY_DIR_IMAGE}/hd-partitions-${MACHINE}/${MACHINE}/recovery.bin ${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/${MACHINE}/recovery.bin; \
 	fi
-	echo "${MACHINEBUILD}-${DATE}-RECOVERY" > ${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/${MACHINE}/recoveryversion; \
-	echo "***** ACHTUNG *****" >${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-	echo "Das RECOVERY wird nur benöetigt wenn es Probleme gibt beim zugriff auf das MULTIBOOT MENÜ" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-	echo "Das ${IMAGE_NAME}_recovery_usb.zip sollte normalerweise einmal installiert werden (oder wenn es ein Update gibt.)" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-	echo "Dies ist erforderlich, um Probleme mit dem Images zuvermeiden,wenn sich der Aufbau der Partition ändert (bootargs)." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-	echo "Die Änderungen können alle Daten im Flash Löschen, nur Installieren wenn es notwendig ist." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_lies.mich; \
-	echo "***** ATTENTION *****" >${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-	echo "This RECOVERY only need when you have issue access the MULTIBOOT MENU" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-	echo "The ${IMAGE_NAME}_recovery_usb.zip should been install normally once (or if there is an update.)" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-	echo "This is needed for avoid images conflicts as the partition layout (bootargs) is of huge essential." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
-	echo "A small change can destroy all your install images. So we can better leave it and not install it if it's not need." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINEBUILD}_READ.ME; \
+	echo "${MACHINE}-${DATE}-RECOVERY" > ${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/${MACHINE}/recoveryversion; \
+	echo "***** ACHTUNG *****" >${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_lies.mich; \
+	echo "Das RECOVERY wird nur benöetigt wenn es Probleme gibt beim zugriff auf das MULTIBOOT MENÜ" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_lies.mich; \
+	echo "Das ${IMAGE_NAME}_recovery_usb.zip sollte normalerweise einmal installiert werden (oder wenn es ein Update gibt.)" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_lies.mich; \
+	echo "Dies ist erforderlich, um Probleme mit dem Images zuvermeiden,wenn sich der Aufbau der Partition ändert (bootargs)." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_lies.mich; \
+	echo "Die Änderungen können alle Daten im Flash Löschen, nur Installieren wenn es notwendig ist." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_lies.mich; \
+	echo "***** ATTENTION *****" >${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_READ.ME; \
+	echo "This RECOVERY only need when you have issue access the MULTIBOOT MENU" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_READ.ME; \
+	echo "The ${IMAGE_NAME}_recovery_usb.zip should been install normally once (or if there is an update.)" >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_READ.ME; \
+	echo "This is needed for avoid images conflicts as the partition layout (bootargs) is of huge essential." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_READ.ME; \
+	echo "A small change can destroy all your install images. So we can better leave it and not install it if it's not need." >>${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}/recovery_${MACHINE}_READ.ME; \
 	cd ${IMGDEPLOYDIR}/${IMAGEDIRRECOVERY}; \
 	zip -r ../${DISTRO_NAME}-${DISTRO_VERSION}-${MACHINE}_recovery_emmc.zip *; \
 	cd ..; \
