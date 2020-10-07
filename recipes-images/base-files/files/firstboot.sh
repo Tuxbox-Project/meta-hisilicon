@@ -13,18 +13,15 @@ if [ -b /dev/disk/by-partlabel/userdata ]; then
 	resize2fs /dev/disk/by-partlabel/userdata
 fi
 
-if [ ! -f /mnt/userdata/swapfile ]; then
-	[ ! -d /mnt/userdata ] && mkdir /mnt/userdata
-	mountpoint -q /mnt/userdata || mount -l /dev/disk/by-partlabel/userdata /mnt/userdata
+if [ ! -f /swapfile ]; then
 	echo "Creating swapfile"
-	dd if=/dev/zero of=/mnt/userdata/swapfile bs=1024 count=204800
-	chmod 600 /mnt/userdata/swapfile
-	mkswap -L swapspace /mnt/userdata/swapfile
-	swapon /mnt/userdata/swapfile
+	dd if=/dev/zero of=/swapfile bs=1024 count=204800
+	chmod 600 /swapfile
+	mkswap -L swapspace /swapfile
 fi
 
-grep -q /mnt/userdata/swapfile /proc/swaps || swapon /mnt/userdata/swapfile
-grep -q /mnt/userdata/swapfile /etc/fstab || echo "/mnt/userdata/swapfile none swap defaults 0 0" >> /etc/fstab
+grep -q /swapfile /proc/swaps || swapon /mnt/userdata/swapfile
+grep -q /swapfile /etc/fstab || echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 
 echo "first boot script work done"
 #job done, remove it from systemd services
