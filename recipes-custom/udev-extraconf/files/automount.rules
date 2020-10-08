@@ -1,5 +1,5 @@
-KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/systemctl start mount@%k.service", RUN+="/usr/bin/mdev_helper"
-KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="remove", RUN+="/bin/systemctl stop mount@%k.service", RUN+="/usr/bin/mdev_helper"
-KERNEL=="mmcblk[1-9]p[1-9]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/systemctl start mount@%k.service", RUN+="/usr/bin/mdev_helper"
-KERNEL=="mmcblk[1-9]p[1-9]", SUBSYSTEM=="block", ACTION=="remove", RUN+="/bin/systemctl stop mount@%k.service", RUN+="/usr/bin/mdev_helper"
+KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/systemctl start mount@%k.service"
+KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="remove", RUN+="/bin/systemctl stop mount@%k.service"
+KERNEL=="mmcblk[1-9]p[1-9]", SUBSYSTEM=="block", ACTION=="add", RUN+="/bin/systemctl start mount@%k.service"
+KERNEL=="mmcblk[1-9]p[1-9]", SUBSYSTEM=="block", ACTION=="remove", RUN+="/bin/systemctl stop mount@%k.service"
 
