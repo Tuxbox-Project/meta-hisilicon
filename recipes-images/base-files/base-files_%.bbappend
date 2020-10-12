@@ -8,6 +8,7 @@ SRC_URI_append += " \
 	file://boot.mount \
 	file://partitions-by-name.sh \
 	file://partitions-by-name.service \
+	file://local.sh \
 "
 
 do_install_append() {
@@ -22,4 +23,5 @@ do_install_append() {
         ln -sf /lib/systemd/system/boot.mount ${D}${systemd_unitdir}/system/multi-user.target.wants
 	install -m 0755 ${WORKDIR}/imgbackup ${D}${bindir}
         install -m 0755 ${WORKDIR}/mount.sh ${D}${bindir}
+	install -m 0755 ${WORKDIR}/local.sh ${D}${bindir}       
 }
