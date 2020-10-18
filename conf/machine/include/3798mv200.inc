@@ -2,7 +2,7 @@
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 PREFERRED_VERSION_linux-hd = "4.4.35"
-
+PREFERRED_VERSION_systemd = "245.6"
 #require conf/machine/include/arm/arch-armv8.inc
 require conf/machine/include/tune-cortexa15.inc
 require conf/machine/include/hd-essential.inc
