@@ -1,5 +1,9 @@
 ANY_OF_DISTRO_FEATURES_class-target = ""
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
+SRC_URI_append += "file://fbdev_window.h"
+
 DEPENDS_append += "libdrm elfutils"
 
 PACKAGECONFIG_class-target ??= "${@bb.utils.filter('DISTRO_FEATURES', 'wayland vulkan', d)} \
@@ -25,6 +29,7 @@ do_install_append() {
     rm -f ${D}${libdir}/libGLESv1*.so.*
     rm -f ${D}${libdir}/libGLESv2.so.*
     rm -f ${D}${libdir}/libGLESv2.so
+    cp -f ${WORKDIR}/fbdev_window.h ${D}${includedir}/EGL
 }
 	
 PROVIDES_remove = "virtual/libgles1 virtual/libgles2 virtual/egl virtual/libgbm"
