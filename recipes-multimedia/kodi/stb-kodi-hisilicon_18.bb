@@ -1,13 +1,13 @@
-COMPATIBLE_MACHINE = "hd60"
+COMPATIBLE_MACHINE = "hd60|hd61"
 
-SRC_URI_remove = " file://0001-add-find-GLIB.patch \
+SRC_URI_remove = "file://0001-add-find-GLIB.patch \
            file://e2player.patch \
            file://0001-introduce-basic-GstPlayer.patch \
 "
 
-SRC_URI = " file://HiPlayer-for-kodi-18.patch \
-           file://HiPlayer-defaultplayer.patch \
-           file://HiPlayer-Subs-18.patch \
+SRC_URI = "file://HiPlayer-for-kodi-18.patch \
+	   file://HiPlayer-defaultplayer.patch \
+	   file://HiPlayer-Subs-18.patch \
 "
 
 PROVIDES += "virtual/kodi"
