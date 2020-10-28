@@ -39,7 +39,6 @@ BB_DANGLINGAPPENDS_WARNONLY = "1"
 
 ### Qemu configuration
 PACKAGECONFIG_pn-qemu-native = ""
-ASSUME_PROVIDED += "libsdl-native"
 CONF_VERSION = "1"
 
 
