@@ -8,5 +8,5 @@ EXTRA_OECONF += " \
 	--enable-video-mali \
 "
 
-PACKAGECONFIG += "alsa gles2 pulseaudio"
+PACKAGECONFIG += "alsa arm-neon gles2 pulseaudio"
 
