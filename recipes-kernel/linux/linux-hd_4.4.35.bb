@@ -35,6 +35,7 @@ SRC_URI = "http://source.mynonpublic.com/gfutures/linux-${PV}-${SRCDATE}-${ARCH}
 	file://mn88472_reset_stream_ID_reg_if_no_PLP_given.patch \
 	file://0001-scripts-dtc-Remove-redundant-YYLOC-global-declaration.patch \
 	file://0001-backport-hid-steam-driver.patch\
+	file://0001-update-bt_rtl-driver.patch \
 "
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
