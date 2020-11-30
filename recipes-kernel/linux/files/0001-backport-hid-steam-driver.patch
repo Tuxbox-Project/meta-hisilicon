@@ -1,29 +1,27 @@
-From 027934008ec22a41d8ec7aac757f5d8a50791d41 Mon Sep 17 00:00:00 2001
+From b172e23b2f833313cec541d448cda046213ac85d Mon Sep 17 00:00:00 2001
 From: Markus Volk <f_l_k@t-online.de>
-Date: Sun, 22 Nov 2020 21:56:01 +0100
-Subject: [PATCH] backport hid-steam driver This driver enables steam
- controllers to work without the need to have steam running. Backport from
- Kernel 4.18
+Date: Mon, 30 Nov 2020 14:54:36 +0100
+Subject: [PATCH] aaaaa
 
 Signed-off-by: Markus Volk <f_l_k@t-online.de>
 ---
  drivers/hid/Kconfig     |    9 +
  drivers/hid/Makefile    |    1 +
+ drivers/hid/hid-core.c  |    2 +
  drivers/hid/hid-ids.h   |    4 +
  drivers/hid/hid-steam.c | 1147 +++++++++++++++++++++++++++++++++++++++
  include/linux/hid.h     |    1 +
- 5 files changed, 1162 insertions(+)
+ 6 files changed, 1164 insertions(+)
  create mode 100644 drivers/hid/hid-steam.c
 
 diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
-index 513a16cc..4fea4f87 100644
+index 513a16cc..32845294 100644
 --- a/drivers/hid/Kconfig
 +++ b/drivers/hid/Kconfig
-@@ -725,6 +725,15 @@ config HID_SPEEDLINK
- 	depends on HID
+@@ -726,6 +726,15 @@ config HID_SPEEDLINK
  	---help---
  	Support for Speedlink Vicious and Divine Cezanne mouse.
-+	
+ 
 +config HID_STEAM
 +	tristate "Steam Controller support"
 +	depends on HID
@@ -31,10 +29,11 @@ index 513a16cc..4fea4f87 100644
 +	---help---
 +	Say Y here if you have a Steam Controller if you want to use it
 +	without running the Steam Client. It supports both the wired and
-+	the wireless adaptor.	
- 
++	the wireless adaptor.
++
  config HID_STEELSERIES
  	tristate "Steelseries SRW-S1 steering wheel support"
+ 	depends on HID
 diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
 index 00011fee..c21ff739 100644
 --- a/drivers/hid/Makefile
@@ -47,6 +46,19 @@ index 00011fee..c21ff739 100644
  obj-$(CONFIG_HID_STEELSERIES)	+= hid-steelseries.o
  obj-$(CONFIG_HID_SUNPLUS)	+= hid-sunplus.o
  obj-$(CONFIG_HID_GREENASIA)	+= hid-gaff.o
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 93696020..bd9c1097 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2012,6 +2012,8 @@ static const struct hid_device_id hid_have_special_driver[] = {
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_PS4_CONTROLLER) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_VAIO_VGX_MOUSE) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_VAIO_VGP_MOUSE) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_VALVE, USB_DEVICE_ID_STEAM_CONTROLLER) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_VALVE, USB_DEVICE_ID_STEAM_CONTROLLER_WIRELESS) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_STEELSERIES, USB_DEVICE_ID_STEELSERIES_SRWS1) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SUNPLUS, USB_DEVICE_ID_SUNPLUS_WDESKTOP) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_THINGM, USB_DEVICE_ID_BLINK1) },
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
 index e3703062..8dc5e5f4 100644
 --- a/drivers/hid/hid-ids.h
